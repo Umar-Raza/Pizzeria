@@ -1,5 +1,11 @@
 import "react-credit-cards-2/dist/es/styles-compiled.css";
-import { ChangeEventHandler, FocusEventHandler, useRef, useState } from "react";
+import {
+  ChangeEventHandler,
+  FC,
+  FocusEventHandler,
+  useRef,
+  useState,
+} from "react";
 import {
   formatCVC,
   formatCreditCardNumber,
@@ -14,8 +20,11 @@ type CardState = {
   name: string;
   focus: undefined | Focused;
 };
+type craditCartProps = {
+  submitHandler: (state: Omit<CardState, "focus">) => void;
+};
 
-const CreditCard = () => {
+const CreditCard: FC<craditCartProps> = ({ submitHandler }) => {
   const formRef = useRef<HTMLFormElement>(null);
   const [state, setState] = useState<CardState>({
     number: "",
@@ -48,7 +57,15 @@ const CreditCard = () => {
   };
 
   return (
-    <form ref={formRef} className="flex flex-col gap-4 items-center">
+    <form
+      ref={formRef}
+      onSubmit={(ev) => {
+        ev.preventDefault();
+        const { focus, ...restOfTheState } = state;
+        submitHandler(restOfTheState);
+      }}
+      className="flex flex-col gap-4 items-center"
+    >
       <Cards
         number={state.number}
         expiry={state.expiry}
