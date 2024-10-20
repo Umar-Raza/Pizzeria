@@ -12,6 +12,7 @@ import {
   formatExpirationDate,
 } from "../utils/card-utils";
 import Cards, { Focused } from "react-credit-cards-2";
+import { useKeyPress } from "../hooks/useKeyPress";
 
 type CardState = {
   number: string;
@@ -55,6 +56,26 @@ const CreditCard: FC<craditCartProps> = ({ submitHandler }) => {
     const targetName = target.name as Focused;
     setState((prev) => ({ ...prev, focus: targetName }));
   };
+
+  const setInputValue = (inputName: string, value: string) => {
+    const target = formRef.current?.elements.namedItem(
+      inputName
+    ) as HTMLInputElement;
+    const nativInputValueSetter = Object.getOwnPropertyDescriptor(
+      window.HTMLInputElement.prototype,
+      "value"
+    )!.set;
+    nativInputValueSetter!.call(target, value);
+    const inputEvent = new Event("input", { bubbles: true });
+    target.dispatchEvent(inputEvent);
+  };
+  useKeyPress("H", () => {
+    console.log("Special key pressed");
+    setInputValue("number", "2222 2222 2222 2222");
+    setInputValue("cvc", "123");
+    setInputValue("expiry", "12/25");
+    setInputValue("name", "test user");
+  });
 
   return (
     <form
@@ -128,6 +149,9 @@ const CreditCard: FC<craditCartProps> = ({ submitHandler }) => {
           PAY
         </button>
       </div>{" "}
+      <small className="text-center italic text-xs">
+        Press Ctrl + Shift + H to fill the form with fake value.
+      </small>
     </form>
   );
 };

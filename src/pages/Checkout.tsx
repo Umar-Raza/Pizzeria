@@ -65,7 +65,7 @@ const Checkout = () => {
                     id: orderId,
                     items: cartItems,
                     total: cartTotal,
-                    creaditCardNum: state.number,
+                    creditCardNum: state.number,
                     state: "pending",
                   })
                 );
