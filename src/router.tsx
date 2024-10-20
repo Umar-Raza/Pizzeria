@@ -7,8 +7,9 @@ import Home from "./pages/Home";
 import Menu from "./pages/Menu";
 import Cart from "./pages/Cart";
 import Checkout from "./pages/Checkout";
-import Order from "./pages/Order";
+import Order, { orderLoader } from "./pages/Order";
 import { RootLayout } from "./components/RootLayout";
+import OrderNotFound from "./pages/OrderNotFound";
 
 export const router = createBrowserRouter(
   createRoutesFromElements(
@@ -17,7 +18,12 @@ export const router = createBrowserRouter(
       <Route path="/menu" element={<Menu />} />
       <Route path="/cart" element={<Cart />} />
       <Route path="/checkout" element={<Checkout />} />
-      <Route path="/orders/:orderId" element={<Order />} />
+      <Route
+        errorElement={<OrderNotFound />}
+        loader={orderLoader}
+        path="/orders/:orderId"
+        element={<Order />}
+      />
     </Route>
   )
 );

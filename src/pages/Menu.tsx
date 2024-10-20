@@ -1,5 +1,8 @@
 import MenuItem from "../components/MenuItem";
 import { MENU_ITEMS } from "../data/menu-items";
+import withQuantity from "../components/withQuantitiy";
+
+const QuantityMenuItem = withQuantity(MenuItem);
 
 const Menu = () => {
   return (
@@ -9,7 +12,7 @@ const Menu = () => {
       </h2>
       <ul className="flex w-full flex-col gap-4">
         {MENU_ITEMS.map((item) => {
-          return <MenuItem key={item.id} item={item} />;
+          return <QuantityMenuItem key={item.id} item={item} />;
         })}
       </ul>
     </>
