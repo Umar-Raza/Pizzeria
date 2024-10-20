@@ -38,7 +38,7 @@ export const cartSlice = createSlice({
         return existingItem.id == action.payload.id;
       });
       matchingPizza!.quantity--;
-      if (matchingPizza!.quantity === 0) {
+      if (matchingPizza!.quantity == 0) {
         state.items = state.items.filter((item) => {
           return item.id !== matchingPizza!.id;
         });
@@ -49,10 +49,13 @@ export const cartSlice = createSlice({
         return item.id !== action.payload.id;
       });
     },
+    resetCart: (state) => {
+      state.items = [];
+    },
   },
 });
 
-export const { addItem, removeItem, deleteItem } = cartSlice.actions;
+export const { addItem, removeItem, deleteItem,resetCart } = cartSlice.actions;
 const cartReducer = cartSlice.reducer;
 
 export const selectItemQuantity = (item: Pizza) => {
