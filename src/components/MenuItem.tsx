@@ -116,8 +116,3 @@ const MenuItem: FC<MenuItemProps> = ({ item, readonly }) => {
 
 export default MenuItem;
 
-function matchingCartItem(
-  item: Pizza
-): (state: { cart: CartState }) => unknown {
-  throw new Error("Function not implemented.");
-}
